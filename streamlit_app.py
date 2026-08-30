@@ -497,7 +497,7 @@ with gcol2:
     st.write("")
     if st.button("✅ 設定 Token", type="primary", use_container_width=True):
         st.session_state.key_status = rag.set_api_key(api_key_input)
-st.text_input("Groq Token 狀態", value=st.session_state.key_status, disabled=True, key="key_status_display")
+st.text_input("Groq Token 狀態", disabled=True, key="key_status")
 
 # ── Telegram 設定 ──────────────────────────
 with st.expander("📮 Telegram 推播設定", expanded=True):
@@ -526,8 +526,8 @@ with st.expander("📮 Telegram 推播設定", expanded=True):
             st.session_state.tg_setup_status = telegram_get_updates(tg_token_input)
 
     st.text_area(
-        "Telegram 設定狀態", value=st.session_state.tg_setup_status, height=120,
-        disabled=True, key="tg_setup_status_display",
+        "Telegram 設定狀態", height=120,
+        disabled=True, key="tg_setup_status",
     )
 
 tab1, tab2, tab3 = st.tabs([
@@ -554,7 +554,7 @@ with tab1:
             st.session_state.dl_file_path = file_path
         st.caption("範例：`2330` + `2317`（換行分隔）搭配年份 `112`；或單一股號 `2330` 搭配 `111`")
     with c2:
-        st.text_area("下載狀態", value=st.session_state.dl_log, height=160, disabled=True, key="dl_log_display")
+        st.text_area("下載狀態", height=160, disabled=True, key="dl_log")
         dl_path = st.session_state.dl_file_path
         if dl_path and os.path.exists(dl_path):
             with open(dl_path, "rb") as f:
@@ -585,7 +585,7 @@ with tab2:
                 with open(tmp_path, "wb") as f:
                     f.write(upload_input.getbuffer())
                 st.session_state.upload_status = rag.load_pdf_file(tmp_path)
-        st.text_area("狀態", value=st.session_state.upload_status, height=100, disabled=True, key="upload_status_display")
+        st.text_area("狀態", height=100, disabled=True, key="upload_status")
 
     with c2:
         st.markdown("#### 方式 B｜指定股號年份自動載入")
@@ -597,7 +597,7 @@ with tab2:
                 st.session_state.b_status = msg
             else:
                 st.session_state.b_status = msg + "\n" + rag.load_pdf_file(path)
-        st.text_area("狀態", value=st.session_state.b_status, height=100, disabled=True, key="b_status_display")
+        st.text_area("狀態", height=100, disabled=True, key="b_status")
 
 # ── Tab 3: RAG 問答 + Telegram 推播 ──────────
 with tab3:
@@ -637,14 +637,14 @@ with tab3:
             st.session_state.last_strategy = strategy_dd
 
         st.text_area(
-            "AI 回答（條列式＋顏文字）", value=st.session_state.answer,
-            height=260, disabled=True, key="answer_display",
+            "AI 回答（條列式＋顏文字）",
+            height=260, disabled=True, key="answer",
         )
 
         with st.expander("📚 查看檢索片段", expanded=False):
             st.text_area(
-                "相關來源", value=st.session_state.source_info,
-                height=300, disabled=True, key="source_display",
+                "相關來源",
+                height=300, disabled=True, key="source_info",
             )
 
         if st.button("📤 傳送到 Telegram（含 emoji 重點格式）", use_container_width=True):
@@ -656,8 +656,8 @@ with tab3:
             )
 
         st.text_area(
-            "Telegram 傳送狀態", value=st.session_state.tg_send_status,
-            height=90, disabled=True, key="tg_send_status_display",
+            "Telegram 傳送狀態",
+            height=90, disabled=True, key="tg_send_status",
         )
 
         st.caption(
