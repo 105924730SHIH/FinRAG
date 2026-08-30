@@ -7,3 +7,4 @@ faiss-cpu
 scikit-learn
 requests
 beautifulsoup4
+torchvision
